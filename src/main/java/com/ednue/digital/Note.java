@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 class Note implements Serializable {
+    public int title;
     int id;
     String content;
     Set<String> tags;

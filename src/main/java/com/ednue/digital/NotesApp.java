@@ -57,27 +57,45 @@ public class NotesApp {
         System.out.println("Notes sorted by last modified date.");
     }
 
-    public void saveNotesToFile(String filename) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(new ArrayList<>(notes.values()));
-            System.out.println("Notes saved successfully!");
-        } catch (IOException e) {
-            System.out.println("Error saving notes.");
+    public class NotesManager {
+        private Map<Integer, Note> notes = new HashMap<>();
+        private List<Note> noteList = new ArrayList<>();
+        private static final String DELIMITER = ";;"; // Separator for fields
+
+        public void saveNotesToFile(String filename) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+                for (Note note : notes.values()) {
+                    writer.write(note.id + DELIMITER + note.title + DELIMITER + note.content);
+                    writer.newLine();
+                }
+                System.out.println("Notes saved successfully!");
+            } catch (IOException e) {
+                System.out.println("Error saving notes.");
+            }
+        }
+
+        public void loadNotesFromFile(String filename) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+                notes.clear();
+                noteList.clear();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(DELIMITER, 3);
+                    if (parts.length == 3) {
+                        int id = Integer.parseInt(parts[0]);
+                        String title = parts[1];
+                        String content = parts[2];
+                        Note note = new Note(id, title, Collections.singleton(content));
+                        notes.put(id, note);
+                        noteList.add(note);
+                    }
+                }
+                System.out.println("Notes loaded successfully!");
+            } catch (IOException e) {
+                System.out.println("No saved notes found.");
+            }
         }
     }
 
-    public void loadNotesFromFile(String filename) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            List<Note> loadedNotes = (List<Note>) ois.readObject();
-            notes.clear();
-            noteList.clear();
-            for (Note note : loadedNotes) {
-                notes.put(note.id, note);
-                noteList.add(note);
-            }
-            System.out.println("Notes loaded successfully!");
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("No saved notes found.");
-        }
-    }
+
 }

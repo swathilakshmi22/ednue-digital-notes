@@ -1,5 +1,6 @@
 package com.ednue.digital;
 
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n1. Create Note\n2. Edit Note\n3. Delete Note\n4. Show All Notes\n5. Sort Notes\n6. Exit");
+            System.out.println("\n1. Create Note\n2. Edit Note\n3. Delete Note\n4. Show All Notes\n5. Sort Notes\n6 . search\n7. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -51,9 +52,13 @@ public class Main {
                     case 5:
                         app.sortNotesByDate();
                         break;
-
-
                     case 6:
+                        System.out.print("Enter keyword to search: ");
+                        String keyword = scanner.nextLine();
+                        app.searchNotes(keyword);
+                        break;
+
+                    case 7:
                         System.out.println("Exiting... Have a great day!");
                         scanner.close();
                         return;
