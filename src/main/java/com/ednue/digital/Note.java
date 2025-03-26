@@ -1,7 +1,11 @@
 package com.ednue.digital;
 
 import java.io.Serializable;
-import java.util.*;
+//import java.util;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 class Note implements Serializable {
     int id;
