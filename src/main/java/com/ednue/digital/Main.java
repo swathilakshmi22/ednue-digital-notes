@@ -1,21 +1,20 @@
 package com.ednue.digital;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
         NotesApp app = new NotesApp();
-        //AutoSaveThread autoSave = new AutoSaveThread(app, "notes.txt");
-        //autoSave.setDaemon(true);
-        //autoSave.start();
-
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("\n1. Create Note\n2. Edit Note\n3. Delete Note\n4. Show All Notes\n5. Sort Notes\n6. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             try {
                 switch (choice) {
@@ -45,12 +44,6 @@ public class Main {
                         System.out.println("Note deleted!");
                         break;
 
-//                    case 4:
-//                        System.out.print("Enter keyword to search: ");
-//                        String keyword = scanner.nextLine();
-//                        app.searchNotes(keyword);
-//                        break;
-
                     case 4:
                         app.displayAllNotes();
                         break;
@@ -59,13 +52,6 @@ public class Main {
                         app.sortNotesByDate();
                         break;
 
-//                    case 7:
-//                        app.saveNotesToFile("notes.txt");
-//                        break;
-
-//                    case 8:
-//                        app.loadNotesFromFile("notes.txt");
-//                        break;
 
                     case 6:
                         System.out.println("Exiting... Have a great day!");
